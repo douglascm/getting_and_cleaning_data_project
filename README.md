@@ -97,7 +97,7 @@ colnames(tidy_df) <-  c('subject','activity',paste('average of ',colnames(tbl)[-
 <br/><br/>
 
 ### **Exporting tidy_df**
-**tidy_df** is written to disk as a txt file, "**tidy_df.txt**", with the **write.txt** function.
+**tidy_df** is written to disk as a txt file with the **write.txt** function.
 ```{r}
 write.table(tidy_df, file = "tidy_df.txt", row.name=FALSE)
 ```

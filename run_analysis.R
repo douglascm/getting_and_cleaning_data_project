@@ -1,13 +1,15 @@
 library(tidyr)
 library(dplyr)
 
-training_setX <- read.table("UCI HAR Dataset/train/X_train.txt")
-training_setY <- read.table("UCI HAR Dataset/train/y_train.txt")
-test_setX <- read.table("UCI HAR Dataset/test/X_test.txt")
-test_setY <- read.table("UCI HAR Dataset/test/y_test.txt")
-subject_test <- read.table("UCI HAR Dataset/test/subject_test.txt")
-subject_train <- read.table("UCI HAR Dataset/train/subject_train.txt")
-feature_labels <- read.table("UCI HAR Dataset/features.txt") %>% rename(index=V1,variable_name=V2)
+# 0. Reading Datasets
+
+training_setX <- read.table("train/X_train.txt")
+training_setY <- read.table("train/y_train.txt")
+test_setX <- read.table("test/X_test.txt")
+test_setY <- read.table("test/y_test.txt")
+subject_test <- read.table("test/subject_test.txt")
+subject_train <- read.table("train/subject_train.txt")
+feature_labels <- read.table("features.txt") %>% rename(index=V1,variable_name=V2)
 
 # 1. Merge Datasets
 
@@ -59,8 +61,10 @@ colnames(df_mean_std)
 
 # 5 From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 
-tbl <- df_mean_std %>% group_by(activity,subject) %>% summarise_all(mean) 
-colnames(tbl) <-  c('subject','activity',paste('average of ',colnames(tbl)[-(1:2)]))
+tidy_df <- df_mean_std %>% group_by(activity,subject) %>% summarise_all(mean) 
+colnames(tidy_df) <-  c('subject','activity',paste('average of ',colnames(tbl)[-(1:2)]))
+write.table(tidy_df, file = "tidy_df.txt", row.name=FALSE)
+
 
 
 
